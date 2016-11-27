@@ -1,4 +1,4 @@
-void StdSort(){ return ;
+void StdSort(){
 	tbtime;
 
 	// std
@@ -37,13 +37,13 @@ void BubbleSort(){
 	tbtime;
 
 	// my
-	unsigned int *arr = new unsigned int[1000];
-	for (int i = 0; i < 1000; ++i)
+	unsigned int *arr = new unsigned int[10000];
+	for (int i = 0; i < 10000; ++i)
 		arr[i] = rand();
 
 	tctime;
 	ASort sort;
-	sort.BubbleSort(arr, 1000);
+	sort.BubbleSort(arr, 10000);
 	tetime;
 
 	delete[] arr;

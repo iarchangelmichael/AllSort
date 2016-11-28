@@ -201,6 +201,25 @@ public:
 		return ;
 	}
 
+	// swap
+	template<class T>
+	void swap(T& left, T& right){
+		T tmp = move(left);
+		left = move(right);
+		right = move(tmp);
+	}
+
+	template<class T>
+	struct remove_reference{
+		typedef T type;
+	};
+
+	template<class T> inline
+	typename remove_reference<T>::type&&
+	move(T& val){
+		return ((typename remove_reference<T>::type&&)val);
+	}
+
 	template<class T>
 	void BubbleSort(T *arr, unsigned int sz){
 		T tmp;
@@ -213,11 +232,13 @@ public:
 				if(arr[i] > arr[i + 1]){
 
 					//using std::swap;
-					//swap(arr[i], arr[i+1]);
+					swap(arr[i], arr[i+1]);
 
-					memcpy(&tmp, &arr[i], sizeof(T));
-					memcpy(&arr[i], &arr[i + 1], sizeof(T));
-					memcpy(&arr[i + 1], &tmp, sizeof(T));
+					// OR
+					//memcpy(&tmp, &arr[i], sizeof(T));
+					//memcpy(&arr[i], &arr[i + 1], sizeof(T));
+					//memcpy(&arr[i + 1], &tmp, sizeof(T));
+
 					sorted = 1;
 				}
 			}
@@ -233,9 +254,13 @@ public:
 		for(unsigned int i = 0; i < sz - 1; i ++){
 			for(unsigned int j = i + 1; j < sz; j ++){
 				if(arr[i] > arr[j]){
-					memcpy(&tmp, &arr[i], sizeof(T));
-					memcpy(&arr[i], &arr[j], sizeof(T));
-					memcpy(&arr[j], &tmp, sizeof(T));
+					//using std::swap;
+					swap(arr[i], arr[j]);
+
+					// OR
+					//memcpy(&tmp, &arr[i], sizeof(T));
+					//memcpy(&arr[i], &arr[j], sizeof(T));
+					//memcpy(&arr[j], &tmp, sizeof(T));
 				}
 			}
 		}
@@ -289,6 +314,36 @@ public:
 		}
 
 		memset(&tmp, 0, sizeof(T));
+	}
+
+
+	template<class T>
+	void ShellSort(T *arr, unsigned int sz){
+		int c, g, i, j;
+		
+		g = sz / 2;
+		sz --;
+
+		while(g){
+			i = g;
+			do{
+				j = i - g;
+				c = 1;
+				
+				do{
+					if(arr[j] <= arr[j + g])
+						c = 0;
+					else
+						swap(arr[j], arr[j + g]);
+					j --;
+
+				}while(j >= 0 && c);   
+				i ++;
+			}while(i <= sz);
+			g /= 2;
+		}
+
+		return ;
 	}
 
 };

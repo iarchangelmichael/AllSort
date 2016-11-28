@@ -15,7 +15,7 @@ int main(){
 	printf("All sort project.\r\n");
 
 	//char *c;
-	//int r = InversionSort(c, 1000);
+	//int r = ShellSort(c, 1000);
 
 	TestingSort();
 

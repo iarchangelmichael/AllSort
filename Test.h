@@ -8,7 +8,7 @@ bool TestSort(unsigned int *arr, unsigned int sz){
 
 
 int StdSort(char *&name, unsigned int sz){
-	name = "Std Sort";
+	name = (char*)"Std Sort";
 
 	// std
 	std::vector<int> v;
@@ -25,7 +25,7 @@ int StdSort(char *&name, unsigned int sz){
 }
 
 int BinarySort(char *&name, unsigned int sz){
-	name = "Binary Sort";
+	name = (char*)"Binary Sort";
 
 	// my
 	unsigned int *arr = new unsigned int[sz];
@@ -45,7 +45,7 @@ int BinarySort(char *&name, unsigned int sz){
 }
 
 int BubbleSort(char *&name, unsigned int sz){
-	name = "Bubble Sort";
+	name = (char*)"Bubble Sort";
 
 	// my
 	unsigned int *arr = new unsigned int[sz];
@@ -65,7 +65,7 @@ int BubbleSort(char *&name, unsigned int sz){
 }
 
 int InversionSort(char *&name, unsigned int sz){
-	name = "Inversion Sort";
+	name = (char*)"Inversion Sort";
 
 	// my
 	unsigned int *arr = new unsigned int[sz];
@@ -85,7 +85,7 @@ int InversionSort(char *&name, unsigned int sz){
 }
 
 int InsertionSort(char *&name, unsigned int sz){
-	name = "Insertion Sort";
+	name = (char*)"Insertion Sort";
 
 	// my
 	unsigned int *arr = new unsigned int[sz];
@@ -105,7 +105,7 @@ int InsertionSort(char *&name, unsigned int sz){
 }
 
 int BinaryInsertionSort(char *&name, unsigned int sz){
-	name = "Binary Insertion Sort";
+	name = (char*)"Binary Insertion Sort";
 
 	// my
 	unsigned int *arr = new unsigned int[sz];
@@ -115,6 +115,26 @@ int BinaryInsertionSort(char *&name, unsigned int sz){
 	tbtime;
 	ASort sort;
 	sort.BinaryInsertionSort(arr, sz);
+	tetime;
+
+	if(!TestSort(arr, sz))
+		tbtime_result *= -1;
+
+	delete[] arr;
+	return tbtime_result;
+}
+
+int ShellSort(char *&name, unsigned int sz){
+	name = (char*)"Shell Sort";
+
+	// my
+	unsigned int *arr = new unsigned int[sz];
+	for (int i = 0; i < sz; ++i)
+		arr[i] = rand();
+
+	tbtime;
+	ASort sort;
+	sort.ShellSort(arr, sz);
 	tetime;
 
 	if(!TestSort(arr, sz))
@@ -138,7 +158,7 @@ public:
 
 };
 
-#define TSR_SIZE		6
+#define TSR_SIZE		7
 #define TSR_MAXTIME		1000
 
 int TestSortMethodRun(int i, char *&name, int sz){
@@ -149,6 +169,7 @@ int TestSortMethodRun(int i, char *&name, int sz){
 		case 3: return InsertionSort(name, sz);
 		case 4: return InversionSort(name, sz);
 		case 5: return BinaryInsertionSort(name, sz);
+		case 6: return ShellSort(name, sz);
 	}
 
 	return 0;
@@ -157,6 +178,8 @@ int TestSortMethodRun(int i, char *&name, int sz){
 void TestSortMethod(int i, TestSortResultStruct &res){
 	unsigned int tsz = 1024;
 	char *name;
+
+	printf("=== New Test ===\r\n");
 
 	while(1){
 		int tm = TestSortMethodRun(i, name, tsz);

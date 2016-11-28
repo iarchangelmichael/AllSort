@@ -390,6 +390,46 @@ public:
 
 		return ;
 	}
+
+	template<class T>
+	void QuickSort(T *arr, unsigned int sz){
+		return QuickSort(arr, 0, (int)sz);
+	}
+
+	template<class T>
+	void QuickSort(T *arr, int l, int r){
+		int i, j, p;
+
+		i = l;
+
+		while(i < r){
+			i = l;
+			j = r;
+			p = arr[(l + r) >> 1];
+
+			while(i < j){
+				while(arr[i] < p)
+					i ++;
+
+				while(arr[j] > p)
+					j --;
+
+				  if(i <= j){
+						swap(arr[i], arr[j]);
+						i ++;
+						j --;
+				  }
+			}
+
+			if(l < j)
+			  QuickSort(arr, l, j);
+			l = i;
+		}
+
+		return ;
+	}
+
+
 };
 
 

@@ -1,7 +1,6 @@
 // All Sort
 // 27.11.2016 16:12
 
-
 // Special functions & defines
 #include "Special.h"
 
@@ -12,12 +11,11 @@
 #include "Test.h"
 
 
-
 int main(){
 	printf("All sort project.\r\n");
 
-	//char *c;
-	//int r = HeapSort(c, 10000);
+
+	//int r = QuickSort(1000000);
 
 	TestingSort();
 

@@ -140,24 +140,41 @@ int HeapSort(unsigned int sz){
 	return tbtime_result;
 }
 
-//using Func = void (ASort::*)();
-//int DefaultSort(const ASort *sort, Func func, unsigned int sz){
-//
-//	// my
-//	unsigned int *arr = new unsigned int[sz];
-//	for (int i = 0; i < sz; ++i)
-//		arr[i] = rand();
-//
-//	tbtime;
-//	//(sort->*func)(arr, sz);
-//	tetime;
-//
-//	if(!TestSort(arr, sz))
-//		tbtime_result *= -1;
-//
-//	delete[] arr;
-//	return tbtime_result;
-//}
+int QuickSort(unsigned int sz){
+	unsigned int *arr = new unsigned int[sz];
+	for (int i = 0; i < sz; ++i)
+		arr[i] = rand();
+
+	tbtime;
+	ASort sort;
+	sort.QuickSort(arr, sz);
+	tetime;
+
+	if(!TestSort(arr, sz))
+		tbtime_result *= -1;
+
+	delete[] arr;
+	return tbtime_result;
+}
+
+typedef void (ASort::*Func)() const;
+int DefaultSort(const ASort *sort, Func func, unsigned int sz){
+
+	// my
+	unsigned int *arr = new unsigned int[sz];
+	for (int i = 0; i < sz; ++i)
+		arr[i] = rand();
+
+	tbtime;
+	//(sort->*func)(arr, sz);
+	tetime;
+
+	if(!TestSort(arr, sz))
+		tbtime_result *= -1;
+
+	delete[] arr;
+	return tbtime_result;
+}
 
 
 class TestSortResultStruct{
@@ -172,9 +189,9 @@ public:
 	int tm;
 };
 
-char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap"};
+char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick"};
 
-#define TSR_SIZE		8
+#define TSR_SIZE		9
 #define TSR_MAXTIME		1000
 
 int TestSortMethodRun(int i, int sz){
@@ -189,7 +206,8 @@ int TestSortMethodRun(int i, int sz){
 		case 5: return BinaryInsertionSort(sz);
 		case 6: return ShellSort(sz);
 		case 7: return HeapSort(sz);
-		//case 7: return DefaultSort(&sort, &ASort::HeapSort, sz);
+		case 8: return QuickSort(sz);
+		//case 8: return DefaultSort(&sort, &ASort::HeapSort, sz);
 	}
 
 	return 0;

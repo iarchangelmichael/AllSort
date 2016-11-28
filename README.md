@@ -25,6 +25,7 @@ https://ru.wikipedia.org/wiki/Сортировка_пузырьком
 
 
 <b>Insertion:</b>
+
 https://en.wikipedia.org/wiki/Insertion_sort
 
 https://ru.wikipedia.org/wiki/Сортировка_вставками 
@@ -53,6 +54,7 @@ https://ru.wikipedia.org/wiki/Пирамидальная_сортировка
 
 
 <b>Qick:</b>
+
 https://en.wikipedia.org/wiki/Quicksort
 
 https://ru.wikipedia.org/wiki/Быстрая_сортировка

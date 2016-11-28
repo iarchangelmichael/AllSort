@@ -158,7 +158,7 @@ public:
 
 	// Sort array
 	template<class T>
-	void RadixSort(T *arr, unsigned int sz){
+	void RadixSort(T *arr, unsigned int sz){  ///  NOT WORK ///
 		const unsigned int tsz = sizeof(T);
 		ASortStack<T> stack;
 		ASortStackBase<T> *baseo, *baset, *base;
@@ -211,12 +211,81 @@ public:
 
 			for(unsigned int i = 0; i < sz - 1; i ++){
 				if(arr[i] > arr[i + 1]){
+
+					//using std::swap;
+					//swap(arr[i], arr[i+1]);
+
 					memcpy(&tmp, &arr[i], sizeof(T));
 					memcpy(&arr[i], &arr[i + 1], sizeof(T));
 					memcpy(&arr[i + 1], &tmp, sizeof(T));
 					sorted = 1;
 				}
 			}
+		}
+
+		memset(&tmp, 0, sizeof(T));
+	}
+
+	template<class T>
+	void InversionSort(T *arr, unsigned int sz){
+		T tmp;
+
+		for(unsigned int i = 0; i < sz - 1; i ++){
+			for(unsigned int j = i + 1; j < sz; j ++){
+				if(arr[i] > arr[j]){
+					memcpy(&tmp, &arr[i], sizeof(T));
+					memcpy(&arr[i], &arr[j], sizeof(T));
+					memcpy(&arr[j], &tmp, sizeof(T));
+				}
+			}
+		}
+
+		memset(&tmp, 0, sizeof(T));
+	}
+
+	template<class T>
+	void InsertionSort(T *arr, unsigned int sz){
+		T tmp;
+
+		for(unsigned int i = 0; i < sz; i ++){
+			memcpy(&tmp, &arr[i], sizeof(T));
+
+			int j = i - 1;
+
+			while(j >= 0 && tmp < arr[j]){
+				memcpy(&arr[j + 1], &arr[j], sizeof(T));
+				j --;
+			}
+
+			memcpy(&arr[j + 1], &tmp, sizeof(T));
+		}
+
+		memset(&tmp, 0, sizeof(T));
+	}
+
+	template<class T>
+	void BinaryInsertionSort(T *arr, unsigned int sz){
+		unsigned int count, step;
+		T *first, *it, tmp;
+
+		for(unsigned int i = 0; i < sz; i ++){
+			memcpy(&tmp, &arr[i], sizeof(T));
+
+			count = i;
+			first = arr;
+
+			while(count){
+				step = count / 2;
+				it = first + step;
+
+				if(*it < arr[i]){
+					first = ++it;
+					count -= step + 1;
+				} else
+					count = step;
+			}
+			memcpy(first + 1, first, (i - (first - arr)) * sizeof(T));
+			memcpy(first, &tmp, sizeof(T));
 		}
 
 		memset(&tmp, 0, sizeof(T));

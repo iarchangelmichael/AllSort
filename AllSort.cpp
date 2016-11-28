@@ -14,11 +14,10 @@
 int main(){
 	printf("All sort project.\r\n");
 
-	for(int i = 0; i < 5; i ++){
-		StdSort();
-		BinarySort();
-		BubbleSort();
-	}
+	//char *c;
+	//int r = InversionSort(c, 1000);
+
+	TestingSort();
 
 	return 0;
 }

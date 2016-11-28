@@ -1,7 +1,64 @@
 # AllSort
-All variant of sort
+<h2>All variant of sort</h2>
 
-Debug programm output:
+
+<b>Test:</b>
+
+Sort unsigned int arr[elements];
+
+<b>Std:</b>
+
+Use std::sort.
+
+<b>Binary: [Not work yet.]</b>
+
+https://en.wikipedia.org/wiki/Radix_sort
+
+https://ru.wikipedia.org/wiki/Поразрядная_сортировка
+
+
+<b>Bubble:</b>
+
+https://en.wikipedia.org/wiki/Bubble_sort
+
+https://ru.wikipedia.org/wiki/Сортировка_пузырьком
+
+
+<b>Insertion:</b>
+https://en.wikipedia.org/wiki/Insertion_sort
+
+https://ru.wikipedia.org/wiki/Сортировка_вставками 
+
+
+<b>Inversion:</b>
+???
+
+<b>BinaryInsertion:</b>
+
+Insertion + https://en.wikipedia.org/wiki/Upper_and_lower_bounds
+
+
+<b>Shell:</b>
+
+https://en.wikipedia.org/wiki/Shellsort
+
+https://ru.wikipedia.org/wiki/Сортировка_Шелла
+
+
+<b>Heap:</b>
+
+https://en.wikipedia.org/wiki/Heapsort
+
+https://ru.wikipedia.org/wiki/Пирамидальная_сортировка
+
+
+<b>Qick:</b>
+https://en.wikipedia.org/wiki/Quicksort
+
+https://ru.wikipedia.org/wiki/Быстрая_сортировка
+
+
+<b>Debug programm output:</b>
 
 <pre>
 Testing sort results:
@@ -28,7 +85,7 @@ Heap: 524288 elements => 1292 ms.       [405 elements in ms.]
 </pre>
 
 
-Release programm output:
+<b>Release programm output:</b>
 
 <pre>
 Testing sort results:

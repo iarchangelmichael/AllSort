@@ -326,26 +326,70 @@ public:
 
 		while(g){
 			i = g;
-			do{
+			while(i <= sz){
 				j = i - g;
 				c = 1;
 				
-				do{
+				while(j >= 0 && c){
 					if(arr[j] <= arr[j + g])
 						c = 0;
 					else
 						swap(arr[j], arr[j + g]);
 					j --;
-
-				}while(j >= 0 && c);   
+				}   
 				i ++;
-			}while(i <= sz);
+			}
 			g /= 2;
 		}
 
 		return ;
 	}
 
+	template<class T>
+	void HeapSort(T *arr, unsigned int sz){
+		int i, k, t;
+
+		i = 2;
+		while(i <= sz){
+			t = i;
+			while(t != 1){
+				k = t / 2;
+				if(arr[k - 1] >= arr[t - 1])
+					t = 1;
+				else{
+					swap(arr[k - 1], arr[t - 1]);
+					t = k;
+				}
+			}
+			i ++;
+		}
+		
+		i = sz - 1;
+		while(i >= 1){
+			swap(arr[i], arr[0]);
+			t = 1;
+			while(t != 0){
+				k = 2 * t;
+				if(k > i)
+					t = 0;
+				else{				
+					if(k < i)
+						if(arr[k] > arr[k - 1])
+							k ++;
+
+					if(arr[t - 1] >= arr[k - 1])
+						t = 0;
+					else{
+						swap(arr[k - 1], arr[t - 1]);
+						t = k;
+					}
+				}
+			}
+			i --;
+		}
+
+		return ;
+	}
 };
 
 

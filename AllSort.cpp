@@ -11,11 +11,13 @@
 // Testing
 #include "Test.h"
 
+
+
 int main(){
 	printf("All sort project.\r\n");
 
 	//char *c;
-	//int r = ShellSort(c, 1000);
+	//int r = HeapSort(c, 10000);
 
 	TestingSort();
 

@@ -7,10 +7,7 @@ bool TestSort(unsigned int *arr, unsigned int sz){
 }
 
 
-int StdSort(char *&name, unsigned int sz){
-	name = (char*)"Std Sort";
-
-	// std
+int StdSort(unsigned int sz){
 	std::vector<int> v;
 	v.reserve(sz);
 	
@@ -24,10 +21,7 @@ int StdSort(char *&name, unsigned int sz){
 	return tbtime_result;
 }
 
-int BinarySort(char *&name, unsigned int sz){
-	name = (char*)"Binary Sort";
-
-	// my
+int BinarySort(unsigned int sz){
 	unsigned int *arr = new unsigned int[sz];
 	for (int i = 0; i < sz; ++i)
 		arr[i] = rand();
@@ -44,10 +38,7 @@ int BinarySort(char *&name, unsigned int sz){
 	return tbtime_result;
 }
 
-int BubbleSort(char *&name, unsigned int sz){
-	name = (char*)"Bubble Sort";
-
-	// my
+int BubbleSort(unsigned int sz){
 	unsigned int *arr = new unsigned int[sz];
 	for (int i = 0; i < sz; ++i)
 		arr[i] = rand();
@@ -64,10 +55,7 @@ int BubbleSort(char *&name, unsigned int sz){
 	return tbtime_result;
 }
 
-int InversionSort(char *&name, unsigned int sz){
-	name = (char*)"Inversion Sort";
-
-	// my
+int InversionSort(unsigned int sz){
 	unsigned int *arr = new unsigned int[sz];
 	for (int i = 0; i < sz; ++i)
 		arr[i] = rand();
@@ -84,10 +72,7 @@ int InversionSort(char *&name, unsigned int sz){
 	return tbtime_result;
 }
 
-int InsertionSort(char *&name, unsigned int sz){
-	name = (char*)"Insertion Sort";
-
-	// my
+int InsertionSort(unsigned int sz){
 	unsigned int *arr = new unsigned int[sz];
 	for (int i = 0; i < sz; ++i)
 		arr[i] = rand();
@@ -104,10 +89,7 @@ int InsertionSort(char *&name, unsigned int sz){
 	return tbtime_result;
 }
 
-int BinaryInsertionSort(char *&name, unsigned int sz){
-	name = (char*)"Binary Insertion Sort";
-
-	// my
+int BinaryInsertionSort(unsigned int sz){
 	unsigned int *arr = new unsigned int[sz];
 	for (int i = 0; i < sz; ++i)
 		arr[i] = rand();
@@ -124,10 +106,7 @@ int BinaryInsertionSort(char *&name, unsigned int sz){
 	return tbtime_result;
 }
 
-int ShellSort(char *&name, unsigned int sz){
-	name = (char*)"Shell Sort";
-
-	// my
+int ShellSort(unsigned int sz){
 	unsigned int *arr = new unsigned int[sz];
 	for (int i = 0; i < sz; ++i)
 		arr[i] = rand();
@@ -144,32 +123,73 @@ int ShellSort(char *&name, unsigned int sz){
 	return tbtime_result;
 }
 
+int HeapSort(unsigned int sz){
+	unsigned int *arr = new unsigned int[sz];
+	for (int i = 0; i < sz; ++i)
+		arr[i] = rand();
+
+	tbtime;
+	ASort sort;
+	sort.HeapSort(arr, sz);
+	tetime;
+
+	if(!TestSort(arr, sz))
+		tbtime_result *= -1;
+
+	delete[] arr;
+	return tbtime_result;
+}
+
+//using Func = void (ASort::*)();
+//int DefaultSort(const ASort *sort, Func func, unsigned int sz){
+//
+//	// my
+//	unsigned int *arr = new unsigned int[sz];
+//	for (int i = 0; i < sz; ++i)
+//		arr[i] = rand();
+//
+//	tbtime;
+//	//(sort->*func)(arr, sz);
+//	tetime;
+//
+//	if(!TestSort(arr, sz))
+//		tbtime_result *= -1;
+//
+//	delete[] arr;
+//	return tbtime_result;
+//}
+
 
 class TestSortResultStruct{
 public:
 	// Sort name
-	char *name;
+	//char *name;
 
 	// Best Size
 	int sz;
 
 	// Best time
 	int tm;
-
 };
 
-#define TSR_SIZE		7
+char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap"};
+
+#define TSR_SIZE		8
 #define TSR_MAXTIME		1000
 
-int TestSortMethodRun(int i, char *&name, int sz){
+int TestSortMethodRun(int i, int sz){
+	ASort sort;
+
 	switch(i){
-		case 0: return StdSort(name, sz);
-		case 1: return BinarySort(name, sz);
-		case 2: return BubbleSort(name, sz);
-		case 3: return InsertionSort(name, sz);
-		case 4: return InversionSort(name, sz);
-		case 5: return BinaryInsertionSort(name, sz);
-		case 6: return ShellSort(name, sz);
+		case 0: return StdSort(sz);
+		case 1: return BinarySort(sz);
+		case 2: return BubbleSort(sz);
+		case 3: return InsertionSort(sz);
+		case 4: return InversionSort(sz);
+		case 5: return BinaryInsertionSort(sz);
+		case 6: return ShellSort(sz);
+		case 7: return HeapSort(sz);
+		//case 7: return DefaultSort(&sort, &ASort::HeapSort, sz);
 	}
 
 	return 0;
@@ -182,12 +202,12 @@ void TestSortMethod(int i, TestSortResultStruct &res){
 	printf("=== New Test ===\r\n");
 
 	while(1){
-		int tm = TestSortMethodRun(i, name, tsz);
+		int tm = TestSortMethodRun(i, tsz);
 
-		printf("Test %s: %d els => %d ms.\r\n", name, tsz, tm);
+		printf("Test %s: %d els => %d ms.\r\n", TestSortName[i], tsz, tm);
 
 		if(tm < 0)
-			printf("Test %s: FAIL!\r\n", name);
+			printf("Test %s: FAIL!\r\n", TestSortName[i]);
 
 		res.sz = tsz;
 		res.tm = tm;
@@ -197,8 +217,6 @@ void TestSortMethod(int i, TestSortResultStruct &res){
 
 		tsz *= 2;
 	}
-
-	res.name = name;
 
 	return ;
 }
@@ -212,7 +230,7 @@ void TestingSort(){
 	printf("\r\nTesting sort results:\r\n");
 
 	for(int i = 0; i < TSR_SIZE; i ++){
-		printf("%s: %d elements => %d ms.	[%d elements in ms.] \r\n", res[i].name, res[i].sz, res[i].tm, res[i].sz / res[i].tm );
+		printf("%s: %d elements => %d ms.	[%d elements in ms.] \r\n", TestSortName[i], res[i].sz, res[i].tm, res[i].sz / res[i].tm );
 	}
 
 	return ;

@@ -6,6 +6,38 @@ bool TestSort(unsigned int *arr, unsigned int sz){
 	return 1;
 }
 
+bool TestSort(unsigned int *arr, unsigned int sz, int tcrc){
+	unsigned int crc = 0;
+
+	for(unsigned int i = 0; i < sz - 1; i ++){
+		if(arr[i] > arr[i + 1] )
+			return 0;
+
+		crc += arr[i];
+	}
+
+	crc += arr[sz - 1];
+
+	if(crc != tcrc)
+		return 0;
+
+	return 1;
+}
+
+bool TestSort(unsigned int *arr, unsigned int *arrt, unsigned int sz){
+	unsigned int val = 0;
+
+	if(arr[0])
+		return 0;
+
+	for(unsigned int i = 0; i < sz; i ++){
+		if(arr[i] != arrt[i])
+			return 0;
+	}
+
+	return 1;
+}
+
 
 int StdSort(unsigned int sz){
 	std::vector<int> v;
@@ -21,144 +53,64 @@ int StdSort(unsigned int sz){
 	return tbtime_result;
 }
 
-int BinarySort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
-
-	tbtime;
-	ASort sort;
-	sort.RadixSort(arr, sz);
-	tetime;
-
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
-
-	delete[] arr;	
-	return tbtime_result;
+#define ALLSORT_TEST_FUNCTION(funcname, testfunc)								\
+int funcname(unsigned int sz){													\
+	ASort sort;																	\
+																				\
+	unsigned int *arr = new unsigned int[sz], crc = 0;							\
+	for(int i = 0; i < sz; ++i){												\
+		crc += arr[i] = rand();													\
+	}																			\
+																				\
+	tbtime;																		\
+																				\
+	sort.testfunc(arr, sz);														\
+	tetime;																		\
+																				\
+	if(!TestSort(arr, sz, crc))													\
+		tbtime_result *= -1;													\
+																				\
+	delete[] arr;																\
+	return tbtime_result;														\
 }
 
-int BubbleSort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
+ALLSORT_TEST_FUNCTION(BinarySort, RadixSort);
+ALLSORT_TEST_FUNCTION(BubbleSort, BubbleSort);
+ALLSORT_TEST_FUNCTION(InversionSort, InversionSort);
+ALLSORT_TEST_FUNCTION(InsertionSort, InsertionSort);
+ALLSORT_TEST_FUNCTION(BinaryInsertionSort, BinaryInsertionSort);
+ALLSORT_TEST_FUNCTION(ShellSort, ShellSort);
+ALLSORT_TEST_FUNCTION(HeapSort, HeapSort);
+ALLSORT_TEST_FUNCTION(QuickSort, QuickSort);
+ALLSORT_TEST_FUNCTION(MergeSort, MergeSort);
 
-	tbtime;
-	ASort sort;
-	sort.BubbleSort(arr, sz);
-	tetime;
 
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
+#include <functional>
 
-	delete[] arr;	
-	return tbtime_result;
+template<typename T>					
+int DefaultSort(const std::function<void(T*, unsigned int)> &testfunc, unsigned int sz){	
+	ASort sort;															
+																		
+	unsigned int *arr = new unsigned int[sz], crc = 0;					
+	for(int i = 0; i < sz; ++i){										
+		crc += arr[i] = rand();											
+	}																	
+																		
+	tbtime;																
+																		
+	sort.testfunc(arr, sz);												
+	tetime;																
+																		
+	if(!TestSort(arr, sz, crc))											
+		tbtime_result *= -1;											
+																		
+	delete[] arr;														
+	return tbtime_result;													
 }
 
-int InversionSort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
-
-	tbtime;
-	ASort sort;
-	sort.InversionSort(arr, sz);
-	tetime;
-
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
-
-	delete[] arr;	
-	return tbtime_result;
-}
-
-int InsertionSort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
-
-	tbtime;
-	ASort sort;
-	sort.InsertionSort(arr, sz);
-	tetime;
-
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
-
-	delete[] arr;
-	return tbtime_result;
-}
-
-int BinaryInsertionSort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
-
-	tbtime;
-	ASort sort;
-	sort.BinaryInsertionSort(arr, sz);
-	tetime;
-
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
-
-	delete[] arr;
-	return tbtime_result;
-}
-
-int ShellSort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
-
-	tbtime;
-	ASort sort;
-	sort.ShellSort(arr, sz);
-	tetime;
-
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
-
-	delete[] arr;
-	return tbtime_result;
-}
-
-int HeapSort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
-
-	tbtime;
-	ASort sort;
-	sort.HeapSort(arr, sz);
-	tetime;
-
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
-
-	delete[] arr;
-	return tbtime_result;
-}
-
-int QuickSort(unsigned int sz){
-	unsigned int *arr = new unsigned int[sz];
-	for (int i = 0; i < sz; ++i)
-		arr[i] = rand();
-
-	tbtime;
-	ASort sort;
-	sort.QuickSort(arr, sz);
-	tetime;
-
-	if(!TestSort(arr, sz))
-		tbtime_result *= -1;
-
-	delete[] arr;
-	return tbtime_result;
-}
 
 typedef void (ASort::*Func)() const;
-int DefaultSort(const ASort *sort, Func func, unsigned int sz){
+int DefaultSort_(const ASort *sort, Func func, unsigned int sz){
 
 	// my
 	unsigned int *arr = new unsigned int[sz];
@@ -189,14 +141,12 @@ public:
 	int tm;
 };
 
-char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick"};
+char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge"};
 
-#define TSR_SIZE		9
+#define TSR_SIZE		10
 #define TSR_MAXTIME		1000
 
 int TestSortMethodRun(int i, int sz){
-	ASort sort;
-
 	switch(i){
 		case 0: return StdSort(sz);
 		case 1: return BinarySort(sz);
@@ -207,7 +157,8 @@ int TestSortMethodRun(int i, int sz){
 		case 6: return ShellSort(sz);
 		case 7: return HeapSort(sz);
 		case 8: return QuickSort(sz);
-		//case 8: return DefaultSort(&sort, &ASort::HeapSort, sz);
+		case 9: return MergeSort(sz);
+		//case 9: return DefaultSort(&ASort::HeapSort, sz);
 	}
 
 	return 0;
@@ -215,7 +166,6 @@ int TestSortMethodRun(int i, int sz){
 
 void TestSortMethod(int i, TestSortResultStruct &res){
 	unsigned int tsz = 1024;
-	char *name;
 
 	printf("=== New Test ===\r\n");
 

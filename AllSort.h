@@ -319,7 +319,7 @@ public:
 
 	template<class T>
 	void ShellSort(T *arr, unsigned int sz){
-		int c, g, i, j;
+		unsigned int c, i, g, j;
 		
 		g = sz / 2;
 		sz --;
@@ -330,11 +330,15 @@ public:
 				j = i - g;
 				c = 1;
 				
-				while(j >= 0 && c){
+				while(c){
 					if(arr[j] <= arr[j + g])
 						c = 0;
 					else
 						swap(arr[j], arr[j + g]);
+
+					if(!j)
+						break;
+
 					j --;
 				}   
 				i ++;
@@ -347,7 +351,7 @@ public:
 
 	template<class T>
 	void HeapSort(T *arr, unsigned int sz){
-		int i, k, t;
+		unsigned int i, k, t;
 
 		i = 2;
 		while(i <= sz){
@@ -398,7 +402,8 @@ public:
 
 	template<class T>
 	void QuickSort(T *arr, int l, int r){
-		int i, j, p;
+		int i, j;
+		T p;
 
 		i = l;
 
@@ -429,6 +434,86 @@ public:
 		return ;
 	}
 
+	template<class T>
+	void MergeSort(T *arr, unsigned int sz){
+		T * tarr = new T[sz];
+
+		if(arr != MergeSort(arr, tarr, 0, sz))
+			memcpy(arr, tarr, sz * sizeof(T));
+		
+		//merge_sort(arr, tarr, 0, sz);
+
+		//memcpy(arr, tarr, sz * sizeof(T));
+
+		//if(!TestArray(arr, sz))
+		//	int ert = 4567;
+
+		delete [] tarr;
+
+		return ;
+	}
+
+	template<class T>
+	bool TestArray(T *arr, unsigned int sz){
+		for(unsigned int i = 0; i < sz - 1; i ++){
+			if(arr[i] > arr[i + 1])
+				return 0;
+		}
+		
+		return 1;
+	}
+
+	template<class T>
+	T* MergeSort(T *arr, T *tarr, unsigned int left, unsigned int right){
+		if(left == right){
+			tarr[left] = move(arr[left]);
+			return tarr;
+		}
+
+		unsigned int center = (unsigned int)((left + right) * 0.5);
+
+		T *larr = MergeSort(arr, tarr, left, center);
+		T *rarr = MergeSort(arr, tarr, center + 1, right);
+		T* res = larr == arr ? tarr : arr;
+
+		unsigned int pleft = left, pright = center + 1;
+
+
+		//for(unsigned int i = left; i <= right; i ++){
+		unsigned int i = left;
+
+		while(pleft <= center && pright <= right){
+			if(larr[pleft] < rarr[pright]){
+				res[i++] = move(larr[pleft]);
+				pleft ++;
+			} else {
+				res[i++] = move(rarr[pright]);
+				pright ++;
+			}
+		}
+
+		if(pleft > center){
+			if(pright <= right)				
+				//memcpy(&res[i], &rarr[pright], (right - pright + 1) * sizeof(T));
+				std::copy(std::make_move_iterator(&rarr[pright]), std::make_move_iterator(&rarr[right + 1]), &res[i]);
+				
+					std::copy(&rarr[pright], &rarr[right + 1], &res[i]);
+				//break;
+		} else if(pright > right){
+			if(pleft <= center)
+				//memcpy(&res[i], &larr[pleft], (center - pleft + 1) * sizeof(T));
+				std::copy(std::make_move_iterator(&larr[pleft]), std::make_move_iterator(&larr[center + 1]), &res[i]);
+
+				//std::copy(&larr[pleft], &larr[center + 1], &res[i]);
+				//break;
+			}
+		//}
+
+		//if(!TestArray(res + left, right - left + 1))
+		//	int rt = 657;
+
+		return res;
+	}
 
 };
 

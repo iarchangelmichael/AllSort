@@ -20,9 +20,10 @@
 int main(){
 	printf("All sort project.\r\n");
 
-	//int r1 = QuickSort(131072);
-	//int r2 = QuickSort(131072);
-	//int r3 = QuickSort(131072);
+
+	//int r1 = MergeSort(131072);
+	//int r2 = MergeSort(131072);
+	//int r3 = MergeSort(131072);
 
 	//printf("Result: %d %d %d.", r1, r2, r3);
 

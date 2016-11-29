@@ -1,7 +1,7 @@
 CC=gcc
 CXX=g++
 RM=rm -f
-SOURCEAllSort.cpp
+SOURCE=AllSort.cpp
 CXXFLAGS= ${HLFLAGS} -std=c++11
 
 all: $(SOURCE)

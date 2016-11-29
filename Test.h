@@ -6,7 +6,8 @@ bool TestSort(unsigned int *arr, unsigned int sz){
 	return 1;
 }
 
-bool TestSort(unsigned int *arr, unsigned int sz, int tcrc){
+template<typename T>
+bool TestSort(T *arr, unsigned int sz, int tcrc){
 	unsigned int crc = 0;
 
 	for(unsigned int i = 0; i < sz - 1; i ++){
@@ -57,7 +58,7 @@ int StdSort(unsigned int sz){
 int funcname(unsigned int sz){													\
 	ASort sort;																	\
 																				\
-	unsigned int *arr = new unsigned int[sz], crc = 0;							\
+	int *arr = new int[sz], crc = 0;							\
 	for(int i = 0; i < sz; ++i){												\
 		crc += arr[i] = rand();													\
 	}																			\
@@ -141,7 +142,7 @@ public:
 	int tm;
 };
 
-char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge"};
+const char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge"};
 
 #define TSR_SIZE		10
 #define TSR_MAXTIME		1000

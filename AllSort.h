@@ -203,7 +203,7 @@ public:
 
 	// swap
 	template<class T>
-	void swap(T& left, T& right){
+	static void swap(T& left, T& right){
 		T tmp = move(left);
 		left = move(right);
 		right = move(tmp);
@@ -215,13 +215,13 @@ public:
 	};
 
 	template<class T> inline
-	typename remove_reference<T>::type&&
+	static typename remove_reference<T>::type&&
 	move(T& val){
 		return ((typename remove_reference<T>::type&&)val);
 	}
 
 	template<class T>
-	void BubbleSort(T *arr, unsigned int sz){
+	static void BubbleSort(T *arr, unsigned int sz){
 		T tmp;
 		int sorted = 1;
 
@@ -248,7 +248,7 @@ public:
 	}
 
 	template<class T>
-	void InversionSort(T *arr, unsigned int sz){
+	static void InversionSort(T *arr, unsigned int sz){
 		T tmp;
 
 		for(unsigned int i = 0; i < sz - 1; i ++){
@@ -269,7 +269,7 @@ public:
 	}
 
 	template<class T>
-	void InsertionSort(T *arr, unsigned int sz){
+	static void InsertionSort(T *arr, unsigned int sz){
 		T tmp;
 
 		for(unsigned int i = 0; i < sz; i ++){
@@ -289,7 +289,7 @@ public:
 	}
 
 	template<class T>
-	void BinaryInsertionSort(T *arr, unsigned int sz){
+	static void BinaryInsertionSort(T *arr, unsigned int sz){
 		unsigned int count, step;
 		T *first, *it, tmp;
 
@@ -318,7 +318,7 @@ public:
 
 
 	template<class T>
-	void ShellSort(T *arr, unsigned int sz){
+	static void ShellSort(T *arr, unsigned int sz){
 		unsigned int c, i, g, j;
 		
 		g = sz / 2;
@@ -350,7 +350,7 @@ public:
 	}
 
 	template<class T>
-	void HeapSort(T *arr, unsigned int sz){
+	static void HeapSort(T *arr, unsigned int sz){
 		unsigned int i, k, t;
 
 		i = 2;
@@ -396,31 +396,35 @@ public:
 	}
 
 	template<class T>
-	void QuickSort(T *arr, unsigned int sz){
-		return QuickSort(arr, 0, (int)sz);
+	static void QuickSort(T *arr, unsigned int sz){
+		return QuickSort(arr, 0, (int)sz - 1);
 	}
 
 	template<class T>
-	void QuickSort(T *arr, int l, int r){
-		int i, j;
-		T p;
+	volatile static void QuickSort(volatile T *arr, volatile int l, volatile int r){
+		volatile int i, j, c;
+		volatile T p, tmp;
 
 		i = l;
+		j = r;
 
 		while(i < r){
 			i = l;
 			j = r;
-			p = arr[(l + r) >> 1];
+			volatile const T p = arr[c = (l + r) >> 1];
 
 			while(i < j){
-				while(arr[i] < p)
+				while(i < r && arr[i] < p)
 					i ++;
 
-				while(arr[j] > p)
+				while(j > l && arr[j] > p)
 					j --;
 
-				  if(i <= j){
+					if(i <= j){
 						swap(arr[i], arr[j]);
+						//memcpy(&tmp, &arr[i], sizeof(T));
+						//memcpy(&arr[i], &arr[j], sizeof(T));
+						//memcpy(&arr[j], &tmp, sizeof(T));
 						i ++;
 						j --;
 				  }
@@ -428,6 +432,7 @@ public:
 
 			if(l < j)
 			  QuickSort(arr, l, j);
+
 			l = i;
 		}
 
@@ -435,10 +440,10 @@ public:
 	}
 
 	template<class T>
-	void MergeSort(T *arr, unsigned int sz){
+	static void MergeSort(T *arr, unsigned int sz){
 		T * tarr = new T[sz];
 
-		if(arr != MergeSort(arr, tarr, 0, sz))
+		if(arr != MergeSort(arr, tarr, 0, sz - 1))
 			memcpy(arr, tarr, sz * sizeof(T));
 		
 		//merge_sort(arr, tarr, 0, sz);
@@ -454,7 +459,7 @@ public:
 	}
 
 	template<class T>
-	bool TestArray(T *arr, unsigned int sz){
+	static bool TestArray(T *arr, unsigned int sz){
 		for(unsigned int i = 0; i < sz - 1; i ++){
 			if(arr[i] > arr[i + 1])
 				return 0;
@@ -464,7 +469,7 @@ public:
 	}
 
 	template<class T>
-	T* MergeSort(T *arr, T *tarr, unsigned int left, unsigned int right){
+	static T* MergeSort(T *arr, T *tarr, unsigned int left, unsigned int right){
 		if(left == right){
 			tarr[left] = move(arr[left]);
 			return tarr;

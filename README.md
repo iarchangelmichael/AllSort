@@ -64,6 +64,18 @@ https://ru.wikipedia.org/wiki/Быстрая_сортировка
 
 <pre>
 Testing sort results:
+Std: 524288 elements => 1437 ms.        [364 elements in ms.]
+Binary: 1024 elements => -1 ms. [-1024 elements in ms.]
+Bubble: 4096 elements => 1148 ms.       [3 elements in ms.]
+Insertion: 16384 elements => 1240 ms.   [13 elements in ms.]
+Inversion: 8192 elements => 3698 ms.    [2 elements in ms.]
+BinaryInsertion: 131072 elements => 3471 ms.    [37 elements in ms.]
+Shell: 16384 elements => 1957 ms.       [8 elements in ms.]
+Heap: 524288 elements => 1833 ms.       [286 elements in ms.]
+Qick: 1048576 elements => 1274 ms.      [823 elements in ms.]
+Merge: 524288 elements => 1906 ms.      [275 elements in ms.]
+
+Testing sort results:
 Std: 1048576 elements => 1757 ms.       [596 elements in ms.]
 Binary: 16384 elements => -1 ms.        [-16384 elements in ms.]
 Bubble: 8192 elements => 2192 ms.       [3 elements in ms.]
@@ -90,6 +102,19 @@ Heap: 524288 elements => 1292 ms.       [405 elements in ms.]
 <b>Release programm output:</b>
 
 <pre>
+Testing sort results:
+Std: 8388608 elements => 1077 ms.       [7788 elements in ms.]
+Binary: 8192 elements => -1 ms. [-8192 elements in ms.]
+Bubble: 32768 elements => 3863 ms.      [8 elements in ms.]
+Insertion: 65536 elements => 2272 ms.   [28 elements in ms.]
+Inversion: 32768 elements => 2667 ms.   [12 elements in ms.]
+BinaryInsertion: 131072 elements => 3344 ms.    [39 elements in ms.]
+Shell: 131072 elements => 1710 ms.      [76 elements in ms.]
+Heap: 4194304 elements => 1895 ms.      [2213 elements in ms.]
+Qick: 4194304 elements => 1138 ms.      [3685 elements in ms.]
+Merge: 8388608 elements => 1935 ms.     [4335 elements in ms.]
+
+
 Testing sort results:
 Std: 16777216 elements => 1357 ms.      [12363 elements in ms.]
 Binary: 2048 elements => -1 ms. [-2048 elements in ms.]

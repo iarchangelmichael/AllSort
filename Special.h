@@ -14,6 +14,14 @@
 	#define memcpy memmove
 #endif
 
+#ifdef WIN32
+	typedef __int64 int64;
+	typedef unsigned __int64 uint64;
+#else
+	typedef long long int64;
+	typedef unsigned long long uint64;
+#endif
+
 #define tbtime timeb ft, fte; int tbtime_sec, tbtime_millim, tbtime_result; ftime(&ft); // print("Time: ", itos(sec*1000+millitm), "ms.\r\n");
 #define tctime ftime(&ft); // continue
 #define tetime ftime(&fte); tbtime_sec=(int)(fte.time-ft.time); tbtime_millim=fte.millitm-ft.millitm; if(fte.millitm<ft.millitm){ tbtime_millim+=1000; tbtime_sec--; } tbtime_result = tbtime_sec * 1000 + tbtime_millim;

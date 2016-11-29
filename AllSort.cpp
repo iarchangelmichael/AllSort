@@ -10,20 +10,14 @@
 // Testing
 #include "Test.h"
 
-
-
-#include <algorithm>
-#include <cstddef>
-#include <iterator>
-#include <memory>
-
 int main(){
 	printf("All sort project.\r\n");
 
-
-	//int r1 = MergeSort(131072);
-	//int r2 = MergeSort(131072);
-	//int r3 = MergeSort(131072);
+	//int r1 = RadixSort(131072 * 2);
+	//int r2 = RadixSort(131072 * 2);
+	//int r3 = RadixSort(131072 * 2);
+	//int r4 = RadixSort(131072 * 2);
+	//int r5 = RadixSort(131072 * 2);
 
 	//printf("Result: %d %d %d.", r1, r2, r3);
 

@@ -158,7 +158,7 @@ public:
 
 	// Sort array
 	template<class T>
-	void RadixSort(T *arr, unsigned int sz){  ///  NOT WORK ///
+	void RadixSort_BAD(T *arr, unsigned int sz){  ///  NOT WORK ///
 		const unsigned int tsz = sizeof(T);
 		ASortStack<T> stack;
 		ASortStackBase<T> *baseo, *baset, *base;
@@ -220,6 +220,7 @@ public:
 		return ((typename remove_reference<T>::type&&)val);
 	}
 
+	// Sorts
 	template<class T>
 	static void BubbleSort(T *arr, unsigned int sz){
 		T tmp;
@@ -446,13 +447,6 @@ public:
 		if(arr != MergeSort(arr, tarr, 0, sz - 1))
 			memcpy(arr, tarr, sz * sizeof(T));
 		
-		//merge_sort(arr, tarr, 0, sz);
-
-		//memcpy(arr, tarr, sz * sizeof(T));
-
-		//if(!TestArray(arr, sz))
-		//	int ert = 4567;
-
 		delete [] tarr;
 
 		return ;
@@ -502,7 +496,7 @@ public:
 				//memcpy(&res[i], &rarr[pright], (right - pright + 1) * sizeof(T));
 				std::copy(std::make_move_iterator(&rarr[pright]), std::make_move_iterator(&rarr[right + 1]), &res[i]);
 				
-					std::copy(&rarr[pright], &rarr[right + 1], &res[i]);
+				//std::copy(&rarr[pright], &rarr[right + 1], &res[i]);
 				//break;
 		} else if(pright > right){
 			if(pleft <= center)
@@ -519,6 +513,98 @@ public:
 
 		return res;
 	}
+
+
+	// Radix sort
+	template<class T>
+	class RadixSortStack{
+	public:
+		T *data;
+		unsigned int *pos, *fpos, *lpos;
+		unsigned int sz;
+
+		// T data[sz] - temp data
+		// uint pos - new element position
+		// uint fpos - uint[base].first
+		// uint lpos - uint[base].last
+
+		RadixSortStack(){
+			memset(this, 0, sizeof(RadixSortStack));
+		}
+
+		~RadixSortStack(){
+			free(data);
+			data = 0;
+		}
+
+		void New(unsigned int size, unsigned int base){
+			free(data);
+			
+			sz = size;
+			data = (T*)malloc(sz * sizeof(T) + sz * sizeof(unsigned int) + 2 * base * sizeof(unsigned int));
+			
+			pos = (unsigned int*)(data + sz);
+			fpos = pos + sz;
+			lpos = fpos + base;
+			
+			return ;
+		}
+	};
+
+	unsigned int RadixSortBits(unsigned int val){
+		unsigned int ret = 0;
+		while(val){
+			val /= 2;
+			ret ++;
+		}
+		return ret;
+	}
+
+	template<class T>
+	void RadixSort(T *arr, unsigned int size, unsigned int base = 256){
+		unsigned int bits = RadixSortBits(base - 1), bit, k, p, j;
+		RadixSortStack<T> st;
+		st.New(size, base);
+
+		// Only 256
+		if(base != 256)
+			return ;
+
+		for(unsigned int i = 0; i < sizeof(T); i ++){
+			memset(st.data, 0, size * sizeof(T));
+			memset(st.pos, 0, size * sizeof(int));
+			memset(st.fpos, 255, 2 * base * sizeof(int));
+
+			//bit = (base - 1) << i;
+			for(j = 0; j < size; j ++){
+				k = (arr[j] >> (8 * i)) & 255;
+				//k = k >> i;
+
+				if(st.fpos[k] == -1){
+					st.fpos[k] = j;
+				} else {
+					st.pos[st.lpos[k]] = j;
+				}
+				st.data[j] = move(arr[j]);
+				st.lpos[k] = j;
+			}
+			k = 0;
+
+			for(j = 0; j < base; j ++){
+				p = st.fpos[j];
+				if(p != -1) while(1){
+					arr[k] = move(st.data[p]);
+					p = st.pos[p];
+					k ++;
+				
+					if(!p)
+						break;
+				}
+			}
+		}
+		return ;
+	}
+
 
 };
 

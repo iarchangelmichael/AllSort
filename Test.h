@@ -1,3 +1,11 @@
+const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge"};
+
+#define TSR_SIZE		10
+#define TSR_MAXTIME		1000
+#define TSR_BASETYPE	int
+
+
+
 bool TestSort(unsigned int *arr, unsigned int sz){
 	for(unsigned int i = 0; i < sz - 1; i ++)
 		if(arr[i] > arr[i + 1])
@@ -7,8 +15,8 @@ bool TestSort(unsigned int *arr, unsigned int sz){
 }
 
 template<typename T>
-bool TestSort(T *arr, unsigned int sz, int tcrc){
-	unsigned int crc = 0;
+bool TestSort(T *arr, unsigned int sz, T tcrc){
+	T crc = 0;
 
 	for(unsigned int i = 0; i < sz - 1; i ++){
 		if(arr[i] > arr[i + 1] )
@@ -25,23 +33,10 @@ bool TestSort(T *arr, unsigned int sz, int tcrc){
 	return 1;
 }
 
-bool TestSort(unsigned int *arr, unsigned int *arrt, unsigned int sz){
-	unsigned int val = 0;
-
-	if(arr[0])
-		return 0;
-
-	for(unsigned int i = 0; i < sz; i ++){
-		if(arr[i] != arrt[i])
-			return 0;
-	}
-
-	return 1;
-}
 
 
 int StdSort(unsigned int sz){
-	std::vector<int> v;
+	std::vector<TSR_BASETYPE> v;
 	v.reserve(sz);
 	
 	for (int i = 0; i < sz; ++i)
@@ -58,7 +53,8 @@ int StdSort(unsigned int sz){
 int funcname(unsigned int sz){													\
 	ASort sort;																	\
 																				\
-	int *arr = new int[sz], crc = 0;							\
+/*	unsigned int *arr = new unsigned int[sz], crc = 0;	*/						\
+	TSR_BASETYPE *arr = new TSR_BASETYPE[sz], crc = 0;							\
 	for(int i = 0; i < sz; ++i){												\
 		crc += arr[i] = rand();													\
 	}																			\
@@ -75,7 +71,7 @@ int funcname(unsigned int sz){													\
 	return tbtime_result;														\
 }
 
-ALLSORT_TEST_FUNCTION(BinarySort, RadixSort);
+ALLSORT_TEST_FUNCTION(RadixSort, RadixSort);
 ALLSORT_TEST_FUNCTION(BubbleSort, BubbleSort);
 ALLSORT_TEST_FUNCTION(InversionSort, InversionSort);
 ALLSORT_TEST_FUNCTION(InsertionSort, InsertionSort);
@@ -86,6 +82,8 @@ ALLSORT_TEST_FUNCTION(QuickSort, QuickSort);
 ALLSORT_TEST_FUNCTION(MergeSort, MergeSort);
 
 
+
+/*
 #include <functional>
 
 template<typename T>					
@@ -127,7 +125,7 @@ int DefaultSort_(const ASort *sort, Func func, unsigned int sz){
 
 	delete[] arr;
 	return tbtime_result;
-}
+}*/
 
 
 class TestSortResultStruct{
@@ -142,15 +140,11 @@ public:
 	int tm;
 };
 
-const char *TestSortName [] = {"Std", "Binary", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge"};
-
-#define TSR_SIZE		10
-#define TSR_MAXTIME		1000
 
 int TestSortMethodRun(int i, int sz){
 	switch(i){
 		case 0: return StdSort(sz);
-		case 1: return BinarySort(sz);
+		case 1: return RadixSort(sz);
 		case 2: return BubbleSort(sz);
 		case 3: return InsertionSort(sz);
 		case 4: return InversionSort(sz);

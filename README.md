@@ -10,7 +10,7 @@ Sort unsigned int arr[elements];
 
 Use std::sort.
 
-<b>Binary: [Not work yet.]</b>
+<b>Radix:</b>
 
 https://en.wikipedia.org/wiki/Radix_sort
 
@@ -58,6 +58,13 @@ https://ru.wikipedia.org/wiki/Пирамидальная_сортировка
 https://en.wikipedia.org/wiki/Quicksort
 
 https://ru.wikipedia.org/wiki/Быстрая_сортировка
+
+<b>Counting sort:</b> (Not in test. So slow.)
+
+https://en.wikipedia.org/wiki/Counting_sort
+
+https://ru.wikipedia.org/wiki/Сортировка_подсчётом 
+
 
 
 <b>Debug programm output:</b>

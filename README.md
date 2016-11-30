@@ -1,10 +1,23 @@
 # AllSort
 <h2>All variant of sort</h2>
 
+<b>Configure AllSort.cpp:</b>
+
+// Max time in ms:
+
+ #define TSR_MAXTIME		1000
+
+// Base type: int, int64, TestTypeInt, TestTypeStr
+
+ #define TSR_BASETYPE	TestTypeStr
+
+
 
 <b>Test:</b>
 
-Sort unsigned int arr[elements];
+TSR_BASETYPE arr[elements = 512];
+
+while( sort_time < TSR_MAXTIME ){ elements *= 2; };
 
 <b>Std:</b>
 
@@ -58,6 +71,13 @@ https://ru.wikipedia.org/wiki/Пирамидальная_сортировка
 https://en.wikipedia.org/wiki/Quicksort
 
 https://ru.wikipedia.org/wiki/Быстрая_сортировка
+
+<b>Merge:</b>
+
+https://ru.wikipedia.org/wiki/Сортировка_слиянием 
+
+https://en.wikipedia.org/wiki/Merge_sort
+
 
 <b>Counting sort:</b> (Not in test. So slow.)
 

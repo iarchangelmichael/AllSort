@@ -1,6 +1,6 @@
-const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge"};
+const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge", "Counting" };
 
-#define TSR_SIZE		10
+#define TSR_SIZE		11
 #define TSR_MAXTIME		1000
 #define TSR_BASETYPE	int
 
@@ -80,7 +80,7 @@ ALLSORT_TEST_FUNCTION(ShellSort, ShellSort);
 ALLSORT_TEST_FUNCTION(HeapSort, HeapSort);
 ALLSORT_TEST_FUNCTION(QuickSort, QuickSort);
 ALLSORT_TEST_FUNCTION(MergeSort, MergeSort);
-
+ALLSORT_TEST_FUNCTION(CountingSort, CountingSort);
 
 
 /*

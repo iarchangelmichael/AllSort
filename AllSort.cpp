@@ -17,7 +17,9 @@ int main(){
 	//int r2 = RadixSort(131072 * 2);
 	//int r3 = RadixSort(131072 * 2);
 	//int r4 = RadixSort(131072 * 2);
-	//int r5 = RadixSort(131072 * 2);
+	//int r5 = CountingSort(256 * 1024 * 1024);
+
+	//return 0;
 
 	//printf("Result: %d %d %d.", r1, r2, r3);
 

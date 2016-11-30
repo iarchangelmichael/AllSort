@@ -140,7 +140,8 @@ public:
 		free(data);
 		data = 0;
 		base = 0;
-		sz = 0;		
+		sz = 0;
+		els = 0;
 	}
 
 	~ASortStack(){
@@ -515,7 +516,7 @@ public:
 	}
 
 
-	// Radix sort
+	//  My realization Radix sort
 	template<class T>
 	class RadixSortStack{
 	public:
@@ -603,6 +604,47 @@ public:
 			}
 		}
 		return ;
+	}
+
+
+	// My realization Counting Sort. Counting so slow...
+	template<class T>
+	void CountingSort(T *arr, unsigned int size){
+		// Count
+		unsigned int csz = 1024;
+		//unsigned int *carr = new unsigned int[csz];
+		unsigned int carr[1024];
+
+		memset(carr, 0, csz * sizeof(unsigned int));
+
+		unsigned int left = 0, right = size - 1;
+		unsigned int i = 0, ins = left;
+
+		while(1){
+			for(unsigned int j = left; j <= right; j ++){
+				//if(arr[j] >= i && arr[j] < i + csz)
+				if(arr[j] <= (i - 1 + csz)){
+					carr[arr[j] - i] ++;
+					arr[j] = arr[left];
+					left ++;
+				}
+			}
+
+			// Very slow
+			for(unsigned int j = 0; j < csz; j ++){
+				while(carr[j]){
+					arr[ins ++] = i + j;
+					carr[j] --;
+				}
+			}
+
+			i += csz;
+
+			if(!i)
+				break;
+		}
+
+		//delete[] carr;
 	}
 
 

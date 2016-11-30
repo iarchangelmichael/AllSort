@@ -14,7 +14,7 @@
 // Max time in ms
 #define TSR_MAXTIME		1000
 // Base type: int, int64, TestTypeInt, TestTypeStr
-#define TSR_BASETYPE	TestTypeInt
+#define TSR_BASETYPE	TestTypeStr
 
 // Testing
 #include "Test.h"

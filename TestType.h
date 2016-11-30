@@ -94,7 +94,8 @@ public:
 
 	void Set(int v){
 		char buf[16];
-		itoa(v, buf, 10);
+		//itoa(v, buf, 10);
+		sprintf(buf, "%d", v);
 
 		int sz = strlen(buf);
 		data = (char*)malloc(sz + 1);

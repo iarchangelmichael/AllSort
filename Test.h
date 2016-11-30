@@ -1,9 +1,8 @@
-const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge", "Counting" };
+const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge" };
 
-#define TSR_SIZE		11
+#define TSR_SIZE		10
 #define TSR_MAXTIME		1000
 #define TSR_BASETYPE	int
-
 
 
 bool TestSort(unsigned int *arr, unsigned int sz){

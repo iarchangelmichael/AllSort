@@ -403,9 +403,9 @@ public:
 	}
 
 	template<class T>
-	volatile static void QuickSort(volatile T *arr, volatile int l, volatile int r){
-		volatile int i, j, c;
-		volatile T p, tmp;
+	static void QuickSort(T *arr, int l, int r){
+		int i, j, c;
+		T p;
 
 		i = l;
 		j = r;
@@ -413,7 +413,7 @@ public:
 		while(i < r){
 			i = l;
 			j = r;
-			volatile const T p = arr[c = (l + r) >> 1];
+			p = arr[c = (l + r) >> 1];
 
 			while(i < j){
 				while(i < r && arr[i] < p)

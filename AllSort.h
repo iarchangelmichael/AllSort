@@ -1,4 +1,4 @@
-
+#ifdef NOUSEIT
 class SortStack{
 public:
 	// Data
@@ -150,6 +150,8 @@ public:
 
 
 };
+#endif
+
 
 // All sort
 class ASort{
@@ -157,6 +159,7 @@ class ASort{
 	
 public:
 
+#ifdef NOUSEIT
 	// Sort array
 	template<class T>
 	void RadixSort_BAD(T *arr, unsigned int sz){  ///  NOT WORK ///
@@ -201,6 +204,7 @@ public:
 
 		return ;
 	}
+#endif
 
 	// swap
 	template<class T>
@@ -446,7 +450,8 @@ public:
 		T * tarr = new T[sz];
 
 		if(arr != MergeSort(arr, tarr, 0, sz - 1))
-			memcpy(arr, tarr, sz * sizeof(T));
+			//memcpy(arr, tarr, sz * sizeof(T));
+			std::copy(std::make_move_iterator(tarr), std::make_move_iterator(tarr + sz), arr);
 		
 		delete [] tarr;
 

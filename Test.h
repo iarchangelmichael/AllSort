@@ -1,9 +1,5 @@
 const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge" };
-
 #define TSR_SIZE		10
-#define TSR_MAXTIME		1000
-#define TSR_BASETYPE	int
-
 
 bool TestSort(unsigned int *arr, unsigned int sz){
 	for(unsigned int i = 0; i < sz - 1; i ++)
@@ -159,7 +155,7 @@ int TestSortMethodRun(int i, int sz){
 }
 
 void TestSortMethod(int i, TestSortResultStruct &res){
-	unsigned int tsz = 1024;
+	unsigned int tsz = 512;
 
 	printf("=== New Test ===\r\n");
 

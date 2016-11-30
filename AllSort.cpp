@@ -7,13 +7,22 @@
 // Testing
 #include "AllSort.h"
 
+// TestType
+#include "TestType.h"
+
+// Configure:
+// Max time in ms
+#define TSR_MAXTIME		1000
+// Base type: int, int64, TestTypeInt, TestTypeStr
+#define TSR_BASETYPE	TestTypeInt
+
 // Testing
 #include "Test.h"
 
 int main(){
 	printf("All sort project.\r\n");
 
-	//int r1 = RadixSort(131072 * 2);
+	//int r1 = MergeSort(256);
 	//int r2 = RadixSort(131072 * 2);
 	//int r3 = RadixSort(131072 * 2);
 	//int r4 = RadixSort(131072 * 2);

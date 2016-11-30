@@ -74,9 +74,9 @@ https://ru.wikipedia.org/wiki/Быстрая_сортировка
 
 <b>Merge:</b>
 
-https://ru.wikipedia.org/wiki/Сортировка_слиянием 
-
 https://en.wikipedia.org/wiki/Merge_sort
+
+https://ru.wikipedia.org/wiki/Сортировка_слиянием 
 
 
 <b>Counting sort:</b> (Not in test. So slow.)
@@ -86,7 +86,7 @@ https://en.wikipedia.org/wiki/Counting_sort
 https://ru.wikipedia.org/wiki/Сортировка_подсчётом 
 
 
-<b>Testing sort results:</b> Win32 Release, TSR_MAXTIME	= 100, TSR_BASETYPE = int.
+<b>Testing sort results:</b> Win32 Release, TSR_MAXTIME	= 1000, TSR_BASETYPE = int.
 <pre>
 Std: 16777216 elements => 1715 ms.      [9782 elements in ms.]
 Radix: 4194304 elements => 1535 ms.     [2732 elements in ms.]
@@ -100,7 +100,7 @@ Qick: 8388608 elements => 1029 ms.      [8152 elements in ms.]
 Merge: 8388608 elements => 1584 ms.     [5295 elements in ms.]
 </pre>
 
-<b>Testing sort results:</b> Win32 Release, TSR_MAXTIME	= 100, TSR_BASETYPE = TestTypeInt.
+<b>Testing sort results:</b> Win32 Release, TSR_MAXTIME	= 1000, TSR_BASETYPE = TestTypeInt.
 <pre>
 Std: 16777216 elements => 1745 ms.      [9614 elements in ms.]
 Radix: 2097152 elements => 1065 ms.     [1969 elements in ms.]

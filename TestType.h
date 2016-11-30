@@ -7,7 +7,7 @@ public:
 		val = 0;
 	}
 
-	TestTypeInt(int v){
+	TestTypeInt(const int v){
 		val = v;
 	}
 
@@ -15,7 +15,7 @@ public:
 		val = v.val;
 	}
 
-	TestTypeInt& operator=(int v){
+	TestTypeInt& operator=(const int v){
 		val = v;
 		return *this;
 	}
@@ -29,11 +29,11 @@ public:
 		v.val = 0;
 	}
 
-	void operator+=(int v){
+	void operator+=(const int v){
 		val += v;
 	}
 
-	void operator+=(TestTypeInt &v){
+	void operator+=(const TestTypeInt &v){
 		val += v.val;
 	}
 
@@ -53,21 +53,21 @@ public:
 		data = 0;
 	}
 
-	TestTypeStr(int v){
+	TestTypeStr(const int v){
 		Set(v);
 	}
 
-	 TestTypeStr(TestTypeStr &v){
+	 TestTypeStr(const TestTypeStr &v){
 		Set(v);
 	}
 
-	TestTypeStr& operator=(int v){
+	TestTypeStr& operator=(const int v){
 		free(data);
 		Set(v);
 		return *this;
 	}
 
-	TestTypeStr& operator=(TestTypeStr &v){
+	TestTypeStr& operator=(const TestTypeStr &v){
 		free(data);
 		Set(v);
 		return *this;

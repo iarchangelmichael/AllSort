@@ -1,5 +1,5 @@
-const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge" };
-#define TSR_SIZE		10
+const char *TestSortName [] = {"Std", "Radix", "Bubble", "Insertion", "Inversion", "BinaryInsertion", "Shell", "Heap", "Qick", "Merge", "RadixPoi" };
+#define TSR_SIZE		11
 
 bool TestSort(unsigned int *arr, unsigned int sz){
 	for(unsigned int i = 0; i < sz - 1; i ++)
@@ -76,7 +76,10 @@ ALLSORT_TEST_FUNCTION(HeapSort, HeapSort);
 ALLSORT_TEST_FUNCTION(QuickSort, QuickSort);
 ALLSORT_TEST_FUNCTION(MergeSort, MergeSort);
 ALLSORT_TEST_FUNCTION(CountingSort, CountingSort);
+ALLSORT_TEST_FUNCTION(RadixPoiSort, RadixPoiSort);
 
+// Test
+ALLSORT_TEST_FUNCTION(RadixPoisSort, RadixPoisSort);
 
 /*
 #include <functional>
@@ -148,6 +151,8 @@ int TestSortMethodRun(int i, int sz){
 		case 7: return HeapSort(sz);
 		case 8: return QuickSort(sz);
 		case 9: return MergeSort(sz);
+		case 10: return RadixPoiSort(sz);
+		default: return -123456;
 		//case 9: return DefaultSort(&ASort::HeapSort, sz);
 	}
 
@@ -185,11 +190,11 @@ void TestingSort(){
 	for(int i = 0; i < TSR_SIZE; i ++)
 		TestSortMethod(i, res[i]);
 
-	printf("\r\nTesting sort results:\r\n");
+	printf("\r\nTesting sort results: %s %s, TSR_MAXTIME = %d, TSR_BASETYPE = %s\r\n", tsr_os, tsr_rel, TSR_MAXTIME, TSR_TOSTRING(TSR_BASETYPE));
 
-	for(int i = 0; i < TSR_SIZE; i ++){
+	for(int i = 0; i < TSR_SIZE; i ++)
 		printf("%s: %d elements => %d ms.	[%d elements in ms.] \r\n", TestSortName[i], res[i].sz, res[i].tm, res[i].sz / res[i].tm );
-	}
+	
 
 	return ;
 }

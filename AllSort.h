@@ -70,6 +70,7 @@ void myfastsort8(unsigned int size, unsigned int *arr){
 	} return ;
 }
 
+#endif
 
 template<class T>
 class ASortStackPoi{
@@ -110,6 +111,20 @@ public:
 		return ;
 	}
 
+	void Reserv(unsigned int size){
+		Clean();
+
+		data = (unsigned char*)malloc(size);
+		this->base = 0;
+		this->els = 0;
+
+		return ;
+	}
+
+	unsigned char* GetData(){
+		return data;
+	}
+
 	ASortStackBase<T>* GetBase(bool id = 0){
 		if(!data)
 			return 0;
@@ -148,63 +163,14 @@ public:
 		Clean();
 	}
 
-
 };
-#endif
+
 
 
 // All sort
 class ASort{
-
 	
 public:
-
-#ifdef NOUSEIT
-	// Sort array
-	template<class T>
-	void RadixSort_BAD(T *arr, unsigned int sz){  ///  NOT WORK ///
-		const unsigned int tsz = sizeof(T);
-		ASortStack<T> stack;
-		ASortStackBase<T> *baseo, *baset, *base;
-		ASortStackPoi<T> *poio, *poit, *poi;
-
-		stack.Reserv(256, sz);
-		baseo = stack.GetBase(0);
-		baset = stack.GetBase(1);
-		poio = stack.GetPoi(0);
-		poit = stack.GetPoi(1);
-
-		stack.CleanBase(baseo);
-		poi = poio;
-
-		// First
-		for(unsigned int e = 0; e < sz; e ++){
-			if(baseo[arr[e] & 255]._a)
-				baseo[arr[e] & 255]._e->_n = poi;
-			else
-				baseo[arr[e] & 255]._a = poi;			
-
-			baseo[arr[e] & 255]._e = poi;
-			poi->el = &arr[e];
-			poi ++;
-		}
-
-		for(unsigned int i = 1; i < tsz; i++){
-			
-
-			// Reval
-			poi = poio;
-			poio = poit;
-			poit = poi;
-
-			base = baseo;
-			baseo = baset;
-			baset = base;
-		}
-
-		return ;
-	}
-#endif
 
 	// swap
 	template<class T>
@@ -279,19 +245,22 @@ public:
 		T tmp;
 
 		for(unsigned int i = 0; i < sz; i ++){
-			memcpy(&tmp, &arr[i], sizeof(T));
+			//memcpy(&tmp, &arr[i], sizeof(T));
+			tmp = move(arr[i]);
 
 			int j = i - 1;
 
 			while(j >= 0 && tmp < arr[j]){
-				memcpy(&arr[j + 1], &arr[j], sizeof(T));
+				//memcpy(&arr[j + 1], &arr[j], sizeof(T));
+				arr[j + 1] = move(arr[j]);
 				j --;
 			}
 
-			memcpy(&arr[j + 1], &tmp, sizeof(T));
+			//memcpy(&arr[j + 1], &tmp, sizeof(T));
+			arr[j + 1] = move(tmp);
 		}
 
-		memset(&tmp, 0, sizeof(T));
+		//memset(&tmp, 0, sizeof(T));
 	}
 
 	template<class T>
@@ -300,7 +269,8 @@ public:
 		T *first, *it, tmp;
 
 		for(unsigned int i = 0; i < sz; i ++){
-			memcpy(&tmp, &arr[i], sizeof(T));
+			//memcpy(&tmp, &arr[i], sizeof(T));
+			tmp = move(arr[i]);
 
 			count = i;
 			first = arr;
@@ -309,17 +279,32 @@ public:
 				step = count / 2;
 				it = first + step;
 
-				if(*it < arr[i]){
+				if(*it < tmp){
 					first = ++it;
 					count -= step + 1;
 				} else
 					count = step;
 			}
-			memcpy(first + 1, first, (i - (first - arr)) * sizeof(T));
-			memcpy(first, &tmp, sizeof(T));
+
+			//if(first != &arr[i])
+				//memcpy(first + 1, first, (i - (first - arr)) * sizeof(T));
+			//
+			//std::copy_backward(std::make_move_iterator(first), std::make_move_iterator(&arr[i]), (first + 1));
+				//std::move_backward(std::make_move_iterator(first), std::make_move_iterator(&arr[i]), (first + 1));
+				//std::move(first, &arr[i], first + 1);
+
+			T *f = first, *t = arr + i;
+			while(t > f){
+				*t = move(*(t - 1));
+				t --;
+			}
+
+			//memcpy(first, &tmp, sizeof(T));
+			*first = move(tmp);
 		}
 
-		memset(&tmp, 0, sizeof(T));
+		//memset(&tmp, 0, sizeof(T));
+		return ;
 	}
 
 
@@ -451,7 +436,7 @@ public:
 
 		if(arr != MergeSort(arr, tarr, 0, sz - 1))
 			//memcpy(arr, tarr, sz * sizeof(T));
-			std::copy(std::make_move_iterator(tarr), std::make_move_iterator(tarr + sz), arr);
+			std::move(std::make_move_iterator(tarr), std::make_move_iterator(tarr + sz), arr);
 		
 		delete [] tarr;
 
@@ -566,6 +551,7 @@ public:
 		return ret;
 	}
 
+	// Radix sort. move() count 2 * size per byte(sizeof(T)). 
 	template<class T>
 	void RadixSort(T *arr, unsigned int size, unsigned int base = 256){
 		unsigned int bits = RadixSortBits(base - 1), bit, k, p, j;
@@ -608,6 +594,169 @@ public:
 				}
 			}
 		}
+		return ;
+	}
+
+	// Radix sort + Pointer. move() count 1 * size per byte(sizeof(T)).
+	template<class T>
+	static void RadixPoiSort(T *arr, unsigned int sz){
+		const unsigned int tsz = sizeof(T);
+		ASortStackBase<T> *base;
+		ASortStackPoi<T> *poif, *poi;
+
+		T *arrt = /*(T*) malloc(sz * sizeof(T));*/ new T[sz]; //(T*) data;//stack.GetData();
+		base = (ASortStackBase<T>*) malloc(256 * sizeof(ASortStackBase<T>)); //new ASortStackBase<T>[256]; //stack.GetBase(0);
+		poif = (ASortStackPoi<T>*) malloc(sz * sizeof(ASortStackPoi<T>));// ASortStackPoi<T>[sz]; //stack.GetPoi(0);
+
+		//memset(arrt, 0, sz * sizeof(T));
+
+
+		for(unsigned int b = 0; b < sizeof(T); b ++){
+			memset(base, 0, 256 * sizeof(ASortStackBase<T>));
+			poi = poif;
+
+			for(unsigned int e = 0; e < sz; e ++){
+				unsigned int c = (arr[e] >> (8 * b)) & 255;
+
+				if(base[c]._a)
+					base[c]._e->_n = poi;
+				else
+					base[c]._a = poi;			
+
+				base[c]._e = poi;
+				poi->el = &arr[e];
+				poi ++;
+			}
+
+			unsigned int idx = 0;
+
+			for(unsigned int i = 0; i < 256; i++){	
+				poi = base[i]._a;
+				while(poi){
+					arrt[idx] = move(*poi->el);
+					idx ++;
+
+					if(poi == base[i]._e)
+						break;
+					else
+						poi = poi->_n;
+				}
+			}
+
+			swap(arr, arrt);
+		}
+
+		delete[] arrt;
+		//free(arrt); 
+
+		free(base); //delete[] base;
+		free(poif); //delete[] poif;
+
+		return ;
+	}
+
+
+
+	// Radix sort + Pointers. move() count ... wait.  //move() count 1 * size per byte(sizeof(T)).
+	template<class T>
+	static void RadixPoisSort(T *arr, unsigned int sz){
+		const unsigned int tsz = sizeof(T);
+		ASortStackBase<T> *base, *baset;
+		ASortStackPoi<T> *poif, *poit, *poi, *p;
+
+		//for(unsigned int i = 0; i < sz; i ++)
+		//	printf("%d, ", arr[i]);
+
+		T *tarr = /*(T*) malloc(sz * sizeof(T));*/ new T[sz]; //(T*) data;//stack.GetData();
+		base = (ASortStackBase<T>*) malloc(256 * sizeof(ASortStackBase<T>)); //new ASortStackBase<T>[256]; //stack.GetBase(0);
+		poif = (ASortStackPoi<T>*) malloc(sz * sizeof(ASortStackPoi<T>));// ASortStackPoi<T>[sz]; //stack.GetPoi(0);
+
+		baset = (ASortStackBase<T>*) malloc(256 * sizeof(ASortStackBase<T>)); //new ASortStackBase<T>[256]; //stack.GetBase(0);
+		poit = (ASortStackPoi<T>*) malloc(sz * sizeof(ASortStackPoi<T>));// ASortStackPoi<T>[sz]; //stack.GetPoi(0);
+		//memset(arrt, 0, sz * sizeof(T));
+
+		unsigned int idx = 0;
+
+		//for(unsigned int b = 0; b < sizeof(T); b ++){
+		
+		// First
+		memset(base, 0, 256 * sizeof(ASortStackBase<T>));
+		poi = poif;
+			
+		for(unsigned int e = 0; e < sz; e ++){
+			unsigned int c = arr[e] & 255;
+
+			if(base[c]._a)
+				base[c]._e->_n = poi;
+			else
+				base[c]._a = poi;			
+
+			base[c]._e = poi;
+			poi->el = &arr[e];
+			poi ++;
+		}
+		//}
+
+		for(unsigned int b = 1; b < sizeof(T); b ++){
+			memset(baset, 0, 256 * sizeof(ASortStackBase<T>));
+
+			idx = 0;
+			poi = poit;
+
+			for(unsigned int i = 0; i < 256; i++){	
+				p = base[i]._a;
+				while(p){
+					unsigned int c = (*p->el >> (8 * b)) & 255;
+
+					if(baset[c]._a)
+						baset[c]._e->_n = poi;
+					else
+						baset[c]._a = poi;			
+
+					baset[c]._e = poi;
+					poi->el = p->el;
+					poi ++;
+
+					//arrt[idx] = move(*poi->el);
+					//idx ++;
+
+					if(p == base[i]._e)
+						break;
+					else
+						p = p->_n;
+				}
+			}
+
+			swap(base, baset);
+			swap(poif, poit);
+			//swap(arr, arrt);
+		}
+
+		for(unsigned int i = 0; i < 256; i++){	
+			poi = base[i]._a;
+			while(poi){
+				tarr[idx] = move(*poi->el);
+				idx ++;
+
+				if(poi == base[i]._e)
+					break;
+				else
+					poi = poi->_n;
+			}
+		}
+
+		//memcpy(arr, arrt, sz * sizeof(T));
+		std::copy(std::make_move_iterator(tarr), std::make_move_iterator(tarr + sz), arr);
+
+		delete[] tarr;
+		//free(arrt); 
+
+		free(base); //delete[] base;
+		free(poif); //delete[] poif;
+
+		free(baset);
+		free(poit);
+
 		return ;
 	}
 

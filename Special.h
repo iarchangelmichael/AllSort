@@ -72,3 +72,20 @@
 	if(el->_n) el->_n->_p=el->_p; else if(el==_e) _e=el->_p;	\
 	if(el->_p) el->_p->_n=el->_n; else if(el==_a) _a=el->_n;
 
+
+
+
+#ifdef WIN32
+	const char *tsr_os = "Win32";
+#else
+	const char *tsr_os = "Linux";
+#endif
+
+#ifdef DEBUG
+	const char *tsr_rel = "Debug";
+#else
+	const char *tsr_rel = "Release";
+#endif
+
+#define TSR_TOSTRINGT(x) #x
+#define TSR_TOSTRING(x) TSR_TOSTRINGT(x)

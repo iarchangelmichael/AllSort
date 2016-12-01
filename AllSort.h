@@ -289,15 +289,15 @@ public:
 			//if(first != &arr[i])
 				//memcpy(first + 1, first, (i - (first - arr)) * sizeof(T));
 			//
-			//std::copy_backward(std::make_move_iterator(first), std::make_move_iterator(&arr[i]), (first + 1));
+			std::move_backward(first, &arr[i], &arr[i + 1]);
 				//std::move_backward(std::make_move_iterator(first), std::make_move_iterator(&arr[i]), (first + 1));
 				//std::move(first, &arr[i], first + 1);
 
-			T *f = first, *t = arr + i;
-			while(t > f){
-				*t = move(*(t - 1));
-				t --;
-			}
+			//T *f = first, *t = arr + i;
+			//while(t > f){
+			//	*t = move(*(t - 1));
+			//	t --;
+			//}
 
 			//memcpy(first, &tmp, sizeof(T));
 			*first = move(tmp);
@@ -554,7 +554,7 @@ public:
 	// Radix sort. move() count 2 * size per byte(sizeof(T)). 
 	template<class T>
 	void RadixSort(T *arr, unsigned int size, unsigned int base = 256){
-		unsigned int bits = RadixSortBits(base - 1), bit, k, p, j;
+		unsigned int bits = RadixSortBits(base - 1), k, p, j;
 		RadixSortStack<T> st;
 		st.New(size, base);
 
@@ -746,7 +746,7 @@ public:
 		}
 
 		//memcpy(arr, arrt, sz * sizeof(T));
-		std::copy(std::make_move_iterator(tarr), std::make_move_iterator(tarr + sz), arr);
+		std::move(tarr, tarr + sz, arr);
 
 		delete[] tarr;
 		//free(arrt); 
@@ -765,14 +765,14 @@ public:
 	template<class T>
 	void CountingSort(T *arr, unsigned int size){
 		// Count
-		unsigned int csz = 1024;
+		int csz = 1024;
 		//unsigned int *carr = new unsigned int[csz];
 		unsigned int carr[1024];
 
 		memset(carr, 0, csz * sizeof(unsigned int));
 
 		unsigned int left = 0, right = size - 1;
-		unsigned int i = 0, ins = left;
+		int i = 0, ins = left;
 
 		while(1){
 			for(unsigned int j = left; j <= right; j ++){
@@ -785,7 +785,7 @@ public:
 			}
 
 			// Very slow
-			for(unsigned int j = 0; j < csz; j ++){
+			for(int j = 0; j < csz; j ++){
 				while(carr[j]){
 					arr[ins ++] = i + j;
 					carr[j] --;

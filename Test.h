@@ -34,7 +34,7 @@ int StdSort(unsigned int sz){
 	std::vector<TSR_BASETYPE> v;
 	v.reserve(sz);
 	
-	for (int i = 0; i < sz; ++i)
+	for(unsigned int i = 0; i < sz; ++i)
 		v.push_back(rand());
 
 	tbtime
@@ -50,7 +50,7 @@ int funcname(unsigned int sz){													\
 																				\
 /*	unsigned int *arr = new unsigned int[sz], crc = 0;	*/						\
 	TSR_BASETYPE *arr = new TSR_BASETYPE[sz], crc = 0;							\
-	for(int i = 0; i < sz; ++i){												\
+	for(unsigned int i = 0; i < sz; ++i){										\
 		crc += arr[i] = rand();													\
 	}																			\
 																				\
